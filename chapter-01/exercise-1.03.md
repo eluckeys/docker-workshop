@@ -1,16 +1,16 @@
 # Exercise 1.03 — Attaching to an Ubuntu Container
 
 ## Commands
-docker run -it ubuntu /bin/bash
+docker run -itd --name attach-example1 ubuntu:latest
+docker attach attach-example1
+docker start <stopped-container>
 
 ## Key Observations
-- ubuntu:latest pulled Ubuntu 26.04 (Resolute Raccoon) — newer than host (22.04)
-- Container runs as root by default — security concern
-- Hostname = container ID (UTS namespace isolation)
-- /bin/bash was PID 1 — exit kills the container
-- Full isolated filesystem via mount namespace
+- -itd = interactive + TTY + detached (shell waiting in background)
+- exit kills container — bash is PID 1
+- Ctrl+P+Q detaches without stopping — container stays running
+- Cannot attach to stopped container — must start first
 
 ## 2026 Notes
-- Never use ubuntu:latest in production — pin to specific version e.g. ubuntu:22.04
-- Containers run as root by default — always add USER directive in Dockerfile
-- -it flags required for interactive shell (i=STDIN open, t=pseudo-TTY)
+- ubuntu:latest = Ubuntu 26.04 in May 2026 — pin versions in production
+- Use --name always — random names are unmanageable at scale
