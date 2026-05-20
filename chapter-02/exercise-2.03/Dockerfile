@@ -1,0 +1,7 @@
+FROM ubuntu:22.04
+ENV ENVIRONMENT=production
+ENV APP_VERSION=1.0
+ARG BUILD_DATE
+LABEL build-date=$BUILD_DATE
+RUN echo "Building version $APP_VERSION for $ENVIRONMENT"
+CMD ["env"]
